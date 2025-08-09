@@ -10,7 +10,9 @@ use Symfony\Component\Mime\Email;
 
 class MailerController extends AbstractController
 {
-    #[Route('/enviar-correo', name: 'enviar_correo')]
+    /**
+     * @Route("/enviar-correo", name="enviar_correo")
+     */
     public function enviarCorreo(MailerInterface $mailer): Response
     {
         $email = (new Email())

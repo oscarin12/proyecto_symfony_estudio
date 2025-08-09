@@ -7,17 +7,23 @@ use Symfony\Component\Validator\Constraints as Assert;
 use App\Validator as CustomAssert;
 use App\Validator\FechaMedioDia;
 
-#[ORM\Entity]
+/**
+ * @ORM\Entity
+ */
 class Cita
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column(type: 'integer')]
+    /**
+     * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
+     */
     private $id;
 
-    #[ORM\Column(type: 'datetime')]
-    #[Assert\NotBlank]
-    #[FechaMedioDia]
+    /**
+     * @ORM\Column(type="datetime")
+     * @Assert\NotBlank
+     * @FechaMedioDia
+     */
     private $fecha;
 
     public function getId(): ?int
