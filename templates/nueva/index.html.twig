@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello NuevaController!{% endblock %}
+
+{% block body %}
+{{ form_start(formulario) }}
+    {{ form_row(formulario.titulo) }}
+    {{ form_row(formulario.descripcion) }}
+    <button type="submit">Guardar</button>
+{{ form_end(formulario) }}
+
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Página de saludo{% endblock %}
+
+{% block body %}
+    <h1>Hola {{ nombre }}</h1>
+    
+{% include 'componentes/mensaje.html.twig' with {
+  titulo: 'Éxito',
+  contenido: 'Usuario creado correctamente.'
+} %}
+
+   
+
+
+
+   
+<h2>variable1={{ variable1 }}</h2>
+
+
+<h2>variable2<h2>
+<ul>
+    {% for item in variable2 %}
+        <li>{{ item }}</li>
+    {% else %}
+        <li>No hay elementos</li>
+    {% endfor %}
+</ul>
+
+
+{% endblock %}
+
+
+
