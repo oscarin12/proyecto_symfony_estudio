@@ -7,11 +7,12 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use App\Validator\NoNumeros;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=UsuarioRepository::class)
  */
-class Usuario implements UserInterface
+class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
 {
     /**
      * @ORM\Id
@@ -22,11 +23,9 @@ class Usuario implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
-     
      * @Assert\NotBlank
      * @Assert\Length(min=2, max=255)
      * @NoNumeros
-     * 
      */
     private $nombre;
 
@@ -39,11 +38,9 @@ class Usuario implements UserInterface
     private $username;
 
     /**
-     * @ORM\Column(type="string", length=255,nullable=true)     
-     * 
+     * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\Length(min=2, max=255)
      * @NoNumeros
-     * 
      */
     private $apellido;
 
@@ -69,14 +66,9 @@ class Usuario implements UserInterface
      */
     private $roles = [];
 
-
-
-
-
-
     public function getRoles(): array
     {
-        // guarantee every user at least has ROLE_USER
+        // garantiza que todo usuario tiene al menos ROLE_USER
         $roles = $this->roles;
         $roles[] = 'ROLE_USER';
 
@@ -106,10 +98,12 @@ class Usuario implements UserInterface
 
         return $this;
     }
+
     public function getApellido(): ?string
     {
         return $this->apellido;
     }
+
     public function setApellido(?string $apellido): self
     {
         $this->apellido = $apellido;
@@ -143,19 +137,32 @@ class Usuario implements UserInterface
 
     public function getSalt(): ?string
     {
-        // not needed for bcrypt or argon2i
+        // no necesario para bcrypt o argon2i
         return null;
     }
 
     public function eraseCredentials()
     {
-        // if you store any temporary, sensitive data on the user, clear it here
+        // limpiar datos sensibles temporales si existieran
     }
 
-    public function getUsername()
+    /**
+     * Nuevo método obligatorio en Symfony 5.3+
+     * Retorna el identificador único del usuario (email o username)
+     */
+    public function getUserIdentifier(): string
     {
-        return $this->username;
+        return (string) $this->email;  // o $this->username si prefieres usar username
     }
+
+    /**
+     * Para compatibilidad con versiones anteriores (deprecated)
+     */
+    public function getUsername(): string
+    {
+        return (string) $this->email; // debe coincidir con getUserIdentifier()
+    }
+
     public function setUsername(string $username): self
     {
         $this->username = $username;
