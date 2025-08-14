@@ -52,18 +52,19 @@ class ApiActividadController extends AbstractController
     }
 
     /**
- * @Route("/api/tareas/{id}", name="obtener_tarea", methods={"GET"})
- */
-public function obtenerTarea(int $id, EntityManagerInterface $em): JsonResponse
-{
-    $tarea = $em->getRepository(Actividad::class)->find($id);
+     * @Route("/api/tareas/{id}", name="obtener_tarea", methods={"GET"})
+     */
+    public function obtenerTarea(int $id, EntityManagerInterface $em): JsonResponse
+    {
+        $tarea = $em->getRepository(Actividad::class)->find($id);
 
-    if (!$tarea) {
-        return $this->json(['error' => 'Tarea no encontrada'], Response::HTTP_NOT_FOUND);
+        if (!$tarea) {
+            return $this->json(['error' => 'Tarea no encontrada'], Response::HTTP_NOT_FOUND);
+        }
+
+        return $this->json($tarea, 200, [], ['groups' => 'tareas']);
     }
-
-    return $this->json($tarea, 200, [], ['groups' => 'tareas']);
-}
+    
     /**
      * @Route("/api/tareas/{id}", name="actualizar_tarea", methods={"PUT"})
      */
@@ -109,6 +110,5 @@ public function obtenerTarea(int $id, EntityManagerInterface $em): JsonResponse
         $em->flush();
 
         return new JsonResponse(null, Response::HTTP_NO_CONTENT);
-    }   
-
+    }
 }

@@ -66,6 +66,21 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $roles = [];
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $apiKey;
+
+    public function getApiKey(): ?string
+    {
+        return $this->apiKey;
+    }
+    public function setApiKey(?string $apiKey): self
+    {
+        $this->apiKey = $apiKey;
+        return $this;
+    }
+
     public function getRoles(): array
     {
         // garantiza que todo usuario tiene al menos ROLE_USER

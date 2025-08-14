@@ -20,6 +20,9 @@ security:
             pattern: ^/api
             stateless: true
             provider: app_user_provider
+            # Agregamos el autenticador por API Key
+            custom_authenticators:
+                - App\Security\ApiKeyAuthenticator
             json_login:
                 check_path: /api/login
                 username_path: email
@@ -38,5 +41,5 @@ security:
     access_control:
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        #- { path: ^/api/tareas, roles: ROLE_USER }
+        - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }
         - { path: ^/admin, roles: ROLE_ADMIN }
