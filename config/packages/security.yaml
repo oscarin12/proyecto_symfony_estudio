@@ -1,3 +1,4 @@
+# config/packages/security.yaml
 security:
     enable_authenticator_manager: true
 
@@ -20,7 +21,6 @@ security:
             pattern: ^/api
             stateless: true
             provider: app_user_provider
-            # Agregamos el autenticador por API Key
             custom_authenticators:
                 - App\Security\ApiKeyAuthenticator
             json_login:
@@ -32,7 +32,7 @@ security:
         main:
             lazy: true
             provider: app_user_provider
-            custom_authenticator:
+            custom_authenticators:
                 - App\Security\LoginFormAuthenticator
             logout:
                 path: /logout
